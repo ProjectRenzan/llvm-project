@@ -196,6 +196,7 @@ public:
     AMDPAL,     // AMD PAL Runtime
     HermitCore, // HermitCore Unikernel/Multikernel
     Hurd,       // GNU/Hurd
+    Orihime,
     WASI,       // Experimental WebAssembly OS
     Emscripten,
     LastOSType = Emscripten
