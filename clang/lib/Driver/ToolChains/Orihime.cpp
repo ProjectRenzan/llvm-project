@@ -6,6 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 
+// XXX we should rename all of this to Lianshan later
+
 #include "Orihime.h"
 #include "CommonArgs.h"
 #include "clang/Config/config.h"
