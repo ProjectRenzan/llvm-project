@@ -6,8 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_ORIHIME_H
-#define LLVM_CHANG_LIB_DRIVER_TOOLCHAINS_ORIHIME_H
+#ifndef LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_RENZAN_H
+#define LLVM_CHANG_LIB_DRIVER_TOOLCHAINS_RENZAN_H
 
 #include <clang/Driver/Tool.h>
 #include <clang/Driver/ToolChain.h>
@@ -95,4 +95,4 @@ protected:
 } // end namespace driver
 } // end namespace clang
 
-#endif // LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_ORIHIME_H
+#endif // LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_RENZAN_H
