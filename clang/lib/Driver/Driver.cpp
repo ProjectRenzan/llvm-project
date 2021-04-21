@@ -38,10 +38,10 @@
 #include "ToolChains/NaCl.h"
 #include "ToolChains/NetBSD.h"
 #include "ToolChains/OpenBSD.h"
-#include "ToolChains/Orihime.h"
 #include "ToolChains/PPCLinux.h"
 #include "ToolChains/PS4CPU.h"
 #include "ToolChains/RISCVToolchain.h"
+#include "ToolChains/Renzan.h"
 #include "ToolChains/Solaris.h"
 #include "ToolChains/TCE.h"
 #include "ToolChains/VEToolchain.h"
@@ -5132,8 +5132,8 @@ const ToolChain &Driver::getToolChain(const ArgList &Args,
     case llvm::Triple::Solaris:
       TC = std::make_unique<toolchains::Solaris>(*this, Target, Args);
       break;
-    case llvm::Triple::Orihime:
-      TC = std::make_unique<toolchains::Orihime>(*this, Target, Args);
+    case llvm::Triple::Renzan:
+      TC = std::make_unique<toolchains::Renzan>(*this, Target, Args);
       break;
     case llvm::Triple::AMDHSA:
       TC = std::make_unique<toolchains::ROCMToolChain>(*this, Target, Args);

@@ -409,6 +409,8 @@ TargetInfo *AllocateTarget(const llvm::Triple &Triple,
       return new FuchsiaTargetInfo<RISCV64TargetInfo>(Triple, Opts);
     case llvm::Triple::Linux:
       return new LinuxTargetInfo<RISCV64TargetInfo>(Triple, Opts);
+    case llvm::Triple::Renzan:
+	return new RenzanTargetInfo<RISCV64TargetInfo>(Triple, Opts);
     default:
       return new RISCV64TargetInfo(Triple, Opts);
     }
@@ -562,8 +564,8 @@ TargetInfo *AllocateTarget(const llvm::Triple &Triple,
       return new KFreeBSDTargetInfo<X86_64TargetInfo>(Triple, Opts);
     case llvm::Triple::Solaris:
       return new SolarisTargetInfo<X86_64TargetInfo>(Triple, Opts);
-    case llvm::Triple::Orihime:
-	return new OrihimeTargetInfo<X86_64TargetInfo>(Triple, Opts);
+    case llvm::Triple::Renzan:
+	return new RenzanTargetInfo<X86_64TargetInfo>(Triple, Opts);
     case llvm::Triple::Win32: {
       switch (Triple.getEnvironment()) {
       case llvm::Triple::Cygnus:

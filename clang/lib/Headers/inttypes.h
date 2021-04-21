@@ -18,8 +18,8 @@
 #error MSVC does not have inttypes.h prior to Visual Studio 2013
 #endif
 
-/* Orihime does not have a inttypes.h */
-#ifndef __ORIHIME
+/* Renzan does not have a inttypes.h */
+#ifndef __renzan__
 #include_next <inttypes.h>
 #endif
 

@@ -1,4 +1,4 @@
-//===--- Orihime.cpp - Orihime ToolChain Implementations --------*- C++ -*-===//
+//===--- Renzan.cpp - Renzan ToolChain Implementations --------*- C++ -*-===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
@@ -8,7 +8,7 @@
 
 // XXX we should rename all of this to Lianshan later
 
-#include "Orihime.h"
+#include "Renzan.h"
 #include "CommonArgs.h"
 #include "clang/Config/config.h"
 #include "clang/Driver/Compilation.h"
@@ -29,13 +29,13 @@ using namespace llvm::opt;
 
 using tools::addMultilibFlag;
 
-void orihime::Linker::ConstructJob(Compilation &C, const JobAction &JA,
+void renzan::Linker::ConstructJob(Compilation &C, const JobAction &JA,
                                    const InputInfo &Output,
                                    const InputInfoList &Inputs,
                                    const llvm::opt::ArgList &Args,
                                    const char *LinkingOutput) const {
   const auto &ToolChain =
-      static_cast<const toolchains::Orihime &>(getToolChain());
+      static_cast<const toolchains::Renzan &>(getToolChain());
   const Driver &D = ToolChain.getDriver();
 
   ArgStringList CmdArgs;
@@ -92,8 +92,8 @@ void orihime::Linker::ConstructJob(Compilation &C, const JobAction &JA,
                                          Exec, CmdArgs, Inputs, Output));
 }
 
-/// Orihime -- Orihime tool chain
-Orihime::Orihime(const Driver &D, const llvm::Triple &Triple,
+/// Renzan -- Renzan tool chain
+Renzan::Renzan(const Driver &D, const llvm::Triple &Triple,
                  const ArgList &Args)
     : ToolChain(D, Triple, Args) {
   getProgramPaths().push_back(getDriver().getInstalledDir());
@@ -142,16 +142,16 @@ Orihime::Orihime(const Driver &D, const llvm::Triple &Triple,
           getFilePaths().insert(getFilePaths().begin(), Path);
 }
 
-std::string Orihime::ComputeEffectiveClangTriple(const llvm::opt::ArgList &Args,
+std::string Renzan::ComputeEffectiveClangTriple(const llvm::opt::ArgList &Args,
                                                  types::ID InputType) const {
   llvm::Triple Triple(ComputeLLVMTriple(Args, InputType));
   return Triple.str();
 }
 
-Tool *Orihime::buildLinker() const { return new tools::orihime::Linker(*this); }
+Tool *Renzan::buildLinker() const { return new tools::renzan::Linker(*this); }
 
 ToolChain::RuntimeLibType
-Orihime::GetRuntimeLibType(const llvm::opt::ArgList &Args) const {
+Renzan::GetRuntimeLibType(const llvm::opt::ArgList &Args) const {
   if (Arg *A = Args.getLastArg(clang::driver::options::OPT_rtlib_EQ)) {
     StringRef Value = A->getValue();
     if (Value != "compiler-rt")
@@ -163,7 +163,7 @@ Orihime::GetRuntimeLibType(const llvm::opt::ArgList &Args) const {
 }
 
 ToolChain::CXXStdlibType
-Orihime::GetCXXStdlibType(const llvm::opt::ArgList &Args) const {
+Renzan::GetCXXStdlibType(const llvm::opt::ArgList &Args) const {
   if (Arg *A = Args.getLastArg(options::OPT_stdlib_EQ)) {
     StringRef Value = A->getValue();
     if (Value != "libc++")
@@ -174,7 +174,7 @@ Orihime::GetCXXStdlibType(const llvm::opt::ArgList &Args) const {
   return ToolChain::CST_Libcxx;
 }
 
-void Orihime::addClangTargetOptions(const llvm::opt::ArgList &DriverArgs,
+void Renzan::addClangTargetOptions(const llvm::opt::ArgList &DriverArgs,
                                     llvm::opt::ArgStringList &CC1Args,
                                     Action::OffloadKind) const {
   if (!DriverArgs.hasFlag(options::OPT_fuse_init_array,
@@ -185,7 +185,7 @@ void Orihime::addClangTargetOptions(const llvm::opt::ArgList &DriverArgs,
   CC1Args.push_back("-no-implicit-float");
 }
 
-void Orihime::AddClangSystemIncludeArgs(
+void Renzan::AddClangSystemIncludeArgs(
     const llvm::opt::ArgList &DriverArgs,
     llvm::opt::ArgStringList &CC1Args) const {
   const Driver &D = getDriver();
@@ -219,7 +219,7 @@ void Orihime::AddClangSystemIncludeArgs(
   addExternCSystemInclude(DriverArgs, CC1Args, P.str());
 }
 
-void Orihime::AddClangCXXStdlibIncludeArgs(
+void Renzan::AddClangCXXStdlibIncludeArgs(
     const llvm::opt::ArgList &DriverArgs,
     llvm::opt::ArgStringList &CC1Args) const {
   if (DriverArgs.hasArg(options::OPT_nostdlibinc) ||
@@ -240,7 +240,7 @@ void Orihime::AddClangCXXStdlibIncludeArgs(
   }
 }
 
-void Orihime::AddCXXStdlibLibArgs(const llvm::opt::ArgList &Args,
+void Renzan::AddCXXStdlibLibArgs(const llvm::opt::ArgList &Args,
                                   llvm::opt::ArgStringList &CmdArgs) const {
   switch (GetCXXStdlibType(Args)) {
   case ToolChain::CST_Libcxx:
@@ -252,6 +252,6 @@ void Orihime::AddCXXStdlibLibArgs(const llvm::opt::ArgList &Args,
   }
 }
 
-SanitizerMask Orihime::getSupportedSanitizers() const { return {}; }
+SanitizerMask Renzan::getSupportedSanitizers() const { return {}; }
 
-SanitizerMask Orihime::getDefaultSanitizers() const { return {}; }
+SanitizerMask Renzan::getDefaultSanitizers() const { return {}; }

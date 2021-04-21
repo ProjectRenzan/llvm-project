@@ -1,4 +1,4 @@
-//===--- Orihime.h - Orihime ToolChain Implementations ----------*- C++ -*-===//
+//===--- Renzan.h - Renzan ToolChain Implementations ----------*- C++ -*-===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
@@ -15,10 +15,10 @@
 namespace clang {
 namespace driver {
 namespace tools {
-namespace orihime {
+namespace renzan {
 class LLVM_LIBRARY_VISIBILITY Linker : public Tool {
 public:
-  Linker(const ToolChain &TC) : Tool("orihime::Linker", "ld.lld", TC) {}
+  Linker(const ToolChain &TC) : Tool("renzan::Linker", "ld.lld", TC) {}
 
   bool hasIntegratedCPP() const override { return false; }
   bool isLinkJob() const override { return true; }
@@ -28,13 +28,13 @@ public:
                     const llvm::opt::ArgList &TCArgs,
                     const char *LinkingOutput) const override;
 };
-} // end namespace orihime
+} // end namespace renzan
 } // end namespace tools
 
 namespace toolchains {
-class LLVM_LIBRARY_VISIBILITY Orihime : public ToolChain {
+class LLVM_LIBRARY_VISIBILITY Renzan : public ToolChain {
 public:
-  Orihime(const Driver &D, const llvm::Triple &Triple,
+  Renzan(const Driver &D, const llvm::Triple &Triple,
           const llvm::opt::ArgList &Args);
 
   bool HasNativeLLVMSupport() const override { return true; }

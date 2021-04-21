@@ -298,7 +298,7 @@ protected:
     Builder.defineMacro("__HAIKU__");
     Builder.defineMacro("__ELF__");
     DefineStd(Builder, "unix", Opts);
-    if (this->HasFloat128)
+    if (this->HasFloat128) 
       Builder.defineMacro("__FLOAT128__");
   }
 
@@ -627,15 +627,15 @@ protected:
     Builder.defineMacro("__ELF__");
     Builder.defineMacro("__svr4__");
     Builder.defineMacro("__SVR4");
+    // Solaris headers require _XOPEN_SOURCE to be set to 600 for C99 and
+    // newer, but to 500 for everything else.  feature_test.h has a check to
+    // ensure that you are not using C99 with an old version of X/Open or C89
+    // with a new version.
+    if (Opts.C99)
+      Builder.defineMacro("_XOPEN_SOURCE", "600");
+    else
+      Builder.defineMacro("_XOPEN_SOURCE", "500");
     if (Opts.CPlusPlus) {
-      // Solaris headers require _XOPEN_SOURCE to be set to 600 for C99 and
-      // newer, but to 500 for everything else.  feature_test.h has a check to
-      // ensure that you are not using C99 with an old version of X/Open or C89
-      // with a new version.
-      if (Opts.C99)
-        Builder.defineMacro("_XOPEN_SOURCE", "600");
-      else
-        Builder.defineMacro("_XOPEN_SOURCE", "500");
       Builder.defineMacro("__C99FEATURES__");
       Builder.defineMacro("_FILE_OFFSET_BITS", "64");
     }
@@ -736,6 +736,23 @@ public:
   bool hasInt128Type() const override { return false; }
 
   bool defaultsToAIXPowerAlignment() const override { return true; }
+};
+
+// Renzan target
+template <typename Target>
+class LLVM_LIBRARY_VISIBILITY RenzanTargetInfo : public OSTargetInfo<Target> {
+  void getOSDefines(const LangOptions &Opts, const llvm::Triple &Triple,
+                    MacroBuilder &Builder) const final {
+    DefineStd(Builder, "renzan", Opts);
+    Builder.defineMacro("__ELF__");
+
+    if (Opts.POSIXThreads)
+      Builder.defineMacro("_REENTRANT");
+  }
+
+public:
+  RenzanTargetInfo(const llvm::Triple &Triple, const TargetOptions &Opts)
+      : OSTargetInfo<Target>(Triple, Opts) {}
 };
 
 // z/OS target
@@ -888,27 +905,6 @@ public:
     this->MCountName = "__mcount";
     this->TheCXXABI.set(TargetCXXABI::Fuchsia);
   }
-};
-
-// Orihime target
-// XXX This should be renamed to Lianshan later
-template <typename Target>
-class LLVM_LIBRARY_VISIBILITY OrihimeTargetInfo
-    : public OSTargetInfo<Target> {
-    void getOSDefines(const LangOptions &Opts, const llvm::Triple &Triple,
-                      MacroBuilder &Builder) const final {
-        Builder.defineMacro("__ORIHIME");
-	Builder.defineMacro("__lianshan");
-	Builder.defineMacro("__LIANSHAN");
-        Builder.defineMacro("__ELF__");
-
-        if (Opts.POSIXThreads)
-            Builder.defineMacro("_REENTRANT");
-    }
-public:
-    OrihimeTargetInfo(const llvm::Triple &Triple, const TargetOptions &Opts)
-	: OSTargetInfo<Target>(Triple, Opts) {
-    }
 };
 
 // WebAssembly target
