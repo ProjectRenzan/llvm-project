@@ -229,6 +229,7 @@ void InitHeaderSearch::AddDefaultCIncludePaths(const llvm::Triple &triple,
     case llvm::Triple::PS4:
     case llvm::Triple::ELFIAMCU:
     case llvm::Triple::Fuchsia:
+    case llvm::Triple::Renzan:
       break;
     case llvm::Triple::Win32:
       if (triple.getEnvironment() != llvm::Triple::Cygnus)
@@ -271,6 +272,7 @@ void InitHeaderSearch::AddDefaultCIncludePaths(const llvm::Triple &triple,
   case llvm::Triple::Hurd:
   case llvm::Triple::Solaris:
   case llvm::Triple::OpenBSD:
+  case llvm::Triple::Renzan:
     llvm_unreachable("Include management is handled in the driver.");
 
   case llvm::Triple::CloudABI: {
@@ -338,6 +340,7 @@ void InitHeaderSearch::AddDefaultCIncludePaths(const llvm::Triple &triple,
   case llvm::Triple::NaCl:
   case llvm::Triple::ELFIAMCU:
   case llvm::Triple::Fuchsia:
+  case llvm::Triple::Renzan:
     break;
   case llvm::Triple::PS4: {
     // <isysroot> gets prepended later in AddPath().

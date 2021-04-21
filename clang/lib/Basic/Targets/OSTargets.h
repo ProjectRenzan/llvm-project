@@ -738,6 +738,23 @@ public:
   bool defaultsToAIXPowerAlignment() const override { return true; }
 };
 
+// Renzan target
+template <typename Target>
+class LLVM_LIBRARY_VISIBILITY RenzanTargetInfo : public OSTargetInfo<Target> {
+  void getOSDefines(const LangOptions &Opts, const llvm::Triple &Triple,
+                    MacroBuilder &Builder) const final {
+    DefineStd(Builder, "renzan", Opts);
+    Builder.defineMacro("__ELF__");
+
+    if (Opts.POSIXThreads)
+      Builder.defineMacro("_REENTRANT");
+  }
+
+public:
+  RenzanTargetInfo(const llvm::Triple &Triple, const TargetOptions &Opts)
+      : OSTargetInfo<Target>(Triple, Opts) {}
+};
+
 // z/OS target
 template <typename Target>
 class LLVM_LIBRARY_VISIBILITY ZOSTargetInfo : public OSTargetInfo<Target> {
